@@ -105,6 +105,8 @@ else:
 df['Dim1'] = X_reduced[:, 0]
 df['Dim2'] = X_reduced[:, 1]
 
+
+
 # Player selection
 selected_player = st.selectbox(
     'Select a player to highlight:',
@@ -113,6 +115,9 @@ selected_player = st.selectbox(
 
 # Create visualization
 df['point_size'] = df[name_col].map(lambda x: 15 if x == selected_player else 1)
+
+# convert cluster labels to strings
+df['cluster'] = 'Cluster ' + df['cluster'].astype(str)
 
 fig = px.scatter(
     df,
@@ -124,19 +129,26 @@ fig = px.scatter(
     title=f'NBA Players Clustering - {dataset_choice} ({dim_reduction})',
     labels={
         'Dim1': f'{dim_reduction} Component 1', 
-        'Dim2': f'{dim_reduction} Component 2'
+        'Dim2': f'{dim_reduction} Component 2',
+        'cluster': 'Cluster'
     },
     color_discrete_sequence=generate_color_sequence(n_clusters),
-    template='plotly_dark'  # Add this line
+    template='plotly_dark'
 )
 
-# And update the layout settings
+# Update layout with larger height
 fig.update_layout(
     width=800, 
-    height=600,
+    height=900,  # Increased height
     paper_bgcolor='rgba(0,0,0,0.0)',
     plot_bgcolor='rgba(0,0,0,0.0)',
-    font_color='white'
+    font_color='white',
+    showlegend=True,  # Ensure legend is shown
+    legend=dict(
+        title_font_color='white',
+        font_color='white',
+        bgcolor='rgba(0,0,0,0.0)'
+    )
 )
 
 # More explicit axis styling
