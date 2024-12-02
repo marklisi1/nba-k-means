@@ -8,7 +8,7 @@ from sklearn.compose import ColumnTransformer
 import plotly.express as px
 from sklearn.manifold import TSNE 
 
-st.title('NBA Player Analysis')
+st.set_page_config(layout="wide", page_title="NBA Player Analysis", initial_sidebar_state="expanded")
 
 # Load data
 @st.cache_data
@@ -126,24 +126,44 @@ fig = px.scatter(
         'Dim1': f'{dim_reduction} Component 1', 
         'Dim2': f'{dim_reduction} Component 2'
     },
-    color_discrete_sequence=generate_color_sequence(n_clusters)
+    color_discrete_sequence=generate_color_sequence(n_clusters),
+    template='plotly_dark'  # Add this line
 )
 
-# Update the layout with dark theme settings
+# And update the layout settings
 fig.update_layout(
     width=800, 
     height=600,
-    paper_bgcolor='rgba(0,0,0,0)',  # transparent background
-    plot_bgcolor='rgba(0,0,0,0)',   # transparent plot
-    font_color='white',             # white text
-    template='plotly_dark'          # use dark template
+    paper_bgcolor='rgba(0,0,0,0.0)',
+    plot_bgcolor='rgba(0,0,0,0.0)',
+    font_color='white'
 )
 
-# Update axes for better visibility
-fig.update_xaxes(gridcolor='rgba(255,255,255,0.2)', zeroline=True, zerolinecolor='white')
-fig.update_yaxes(gridcolor='rgba(255,255,255,0.2)', zeroline=True, zerolinecolor='white')
+# More explicit axis styling
+fig.update_traces(
+    marker=dict(
+        line=dict(width=1, color='white')
+    )
+)
 
-st.plotly_chart(fig)
+fig.update_xaxes(
+    showgrid=True,
+    gridwidth=1,
+    gridcolor='rgba(128,128,128,0.2)',
+    linecolor='white',
+    linewidth=1
+)
+
+fig.update_yaxes(
+    showgrid=True,
+    gridwidth=1,
+    gridcolor='rgba(128,128,128,0.2)',
+    linecolor='white',
+    linewidth=1
+)
+
+# Use a different Plotly theme setting when displaying the chart
+st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 # Display player stats
 if selected_player:
