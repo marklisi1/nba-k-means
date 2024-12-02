@@ -26,6 +26,15 @@ def load_regular_season_data():
     reg_stats = pd.concat([reg_stats[~reg_stats['Player'].isin(dupes.Player)], dupes], ignore_index=True)
     return reg_stats.dropna()
 
+# Create a bright color sequence that can scale with the number of clusters
+def generate_color_sequence(n_clusters):
+    """Generate a sequence of bright, distinct colors"""
+    colors = px.colors.qualitative.Bold + px.colors.qualitative.Safe + px.colors.qualitative.Vivid
+    # Ensure we have enough colors by cycling if necessary
+    while len(colors) < n_clusters:
+        colors += colors
+    return colors[:n_clusters]
+
 # Sidebar controls
 with st.sidebar:
     st.header("Analysis Options")
@@ -109,8 +118,9 @@ fig = px.scatter(
         'Dim1': f'{dim_reduction} Component 1', 
         'Dim2': f'{dim_reduction} Component 2'
     },
-    color_discrete_sequence=px.colors.qualitative.Set1
+    color_discrete_sequence=generate_color_sequence(n_clusters)
 )
+
 
 fig.update_layout(width=800, height=600)
 st.plotly_chart(fig)
