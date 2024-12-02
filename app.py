@@ -2,10 +2,8 @@ import pandas as pd
 import numpy as np 
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
-import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
 import plotly.express as px
 from sklearn.manifold import TSNE 
 
