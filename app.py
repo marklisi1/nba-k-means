@@ -96,7 +96,7 @@ if dim_reduction == "PCA":
     reducer = PCA(n_components=2)
     X_reduced = reducer.fit_transform(X_processed.toarray() if hasattr(X_processed, 'toarray') else X_processed)
     explained_variance = reducer.explained_variance_ratio_
-    st.write(f"Explained variance ratio: {explained_variance[0]:.3f}, {explained_variance[1]:.3f}")
+    # st.write(f"Explained variance ratio: {explained_variance[0]:.3f}, {explained_variance[1]:.3f}")
 else:
     reducer = TSNE(n_components=2, random_state=42)
     X_reduced = reducer.fit_transform(X_processed.toarray() if hasattr(X_processed, 'toarray') else X_processed)
@@ -106,7 +106,16 @@ df['Dim1'] = X_reduced[:, 0]
 df['Dim2'] = X_reduced[:, 1]
 
 
-st.markdown('One of my friends thinks Jamal Murray is way better than I do. Here, we use both PCA and t-SNE on some statistical metrics from both regular season and playoff performance in the 2023-24 NBA season to see which NBA players are most statistically similar.')
+st.header("What is this?")
+st.write("An interactive plot where you can see who your favorite player's closest peers are across a bunch of different stats in both the regular season and the playoffs.")
+
+st.header("How does it work?")
+st.write("We use machine learning to compare every player's performance across 25 different statistical measures - the usuals like points, rebounds, and assists, as well as some more advanced ones like usage and eFG%.")
+st.write("Our ML algorithms distill all 25 of these stats into two dimensions, placing similar players closer together. Think of it like creating a map where players with similar playing styles end up near each other. We offer the choice between two different clustering algorithms - try both out!")
+
+st.header("What do these plots mean?")
+st.write("They reflect how similar players are to each other based on their overall statistical profile. Players who are clustered together tend to have similar playing styles and roles on their teams. The different colors represent distinct player archetypes we've identified - like scoring guards, defensive specialists, or versatile forwards. The closer two players are on the plot, the more similar their statistical profiles are.")
+st.write("In the PCA regular-season plot, you can see dynamic scoring guards who are weak on defense like Trae Young, Steph Curry, and Luka Doncic clustered towards the bottom right. At the very top you can see defense stalwarts like Rudy Gobert, Giannis, and AD.")
 
 # Player selection
 selected_player = st.selectbox(
@@ -129,8 +138,8 @@ fig = px.scatter(
     size='point_size',
     title=f'NBA Players Clustering - {dataset_choice} ({dim_reduction})',
     labels={
-        'Dim1': f'{dim_reduction} Component 1', 
-        'Dim2': f'{dim_reduction} Component 2',
+        'Dim1': '', 
+        'Dim2': '',
         'cluster': 'Cluster'
     },
     color_discrete_sequence=generate_color_sequence(n_clusters),
@@ -164,11 +173,13 @@ fig.update_xaxes(
     gridwidth=1,
     gridcolor='rgba(128,128,128,0.2)',
     linecolor='white',
-    linewidth=1
+    linewidth=1,
+    showticklabels=False
 )
 
 fig.update_yaxes(
     showgrid=True,
+    showticklabels=False,
     gridwidth=1,
     gridcolor='rgba(128,128,128,0.2)',
     linecolor='white',
@@ -182,6 +193,8 @@ st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 if selected_player:
     st.subheader(f"Stats for {selected_player}")
     player_stats = df[df[name_col] == selected_player]
+    if "RANK" in player_stats.columns:
+        player_stats = player_stats.drop(['RANK'], axis=1)
     st.dataframe(player_stats)
 
 # Add explanation in sidebar
