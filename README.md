@@ -1,0 +1,1 @@
+One of my friends thinks Jamal Murray is way better than I do - in this notebook I use both PCA and t-SNE on some statistical metrics from both regular season and playoff performance in the 2023-34 NBA season to cluster NBA players.
