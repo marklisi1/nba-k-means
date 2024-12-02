@@ -26,14 +26,22 @@ def load_regular_season_data():
     reg_stats = pd.concat([reg_stats[~reg_stats['Player'].isin(dupes.Player)], dupes], ignore_index=True)
     return reg_stats.dropna()
 
-# Create a bright color sequence that can scale with the number of clusters
 def generate_color_sequence(n_clusters):
     """Generate a sequence of bright, distinct colors"""
-    colors = px.colors.qualitative.Bold + px.colors.qualitative.Safe + px.colors.qualitative.Vivid
+    bright_colors = [
+        '#FF4B4B',  # bright red
+        '#45E6B0',  # bright turquoise
+        '#FFB931',  # bright yellow
+        '#3CB9FF',  # bright blue
+        '#FF61D9',  # bright pink
+        '#00FF00',  # bright green
+        '#FF8C00',  # bright orange
+        '#9D72FF'   # bright purple
+    ]
     # Ensure we have enough colors by cycling if necessary
-    while len(colors) < n_clusters:
-        colors += colors
-    return colors[:n_clusters]
+    while len(bright_colors) < n_clusters:
+        bright_colors += bright_colors
+    return bright_colors[:n_clusters]
 
 # Sidebar controls
 with st.sidebar:
@@ -121,8 +129,20 @@ fig = px.scatter(
     color_discrete_sequence=generate_color_sequence(n_clusters)
 )
 
+# Update the layout with dark theme settings
+fig.update_layout(
+    width=800, 
+    height=600,
+    paper_bgcolor='rgba(0,0,0,0)',  # transparent background
+    plot_bgcolor='rgba(0,0,0,0)',   # transparent plot
+    font_color='white',             # white text
+    template='plotly_dark'          # use dark template
+)
 
-fig.update_layout(width=800, height=600)
+# Update axes for better visibility
+fig.update_xaxes(gridcolor='rgba(255,255,255,0.2)', zeroline=True, zerolinecolor='white')
+fig.update_yaxes(gridcolor='rgba(255,255,255,0.2)', zeroline=True, zerolinecolor='white')
+
 st.plotly_chart(fig)
 
 # Display player stats
