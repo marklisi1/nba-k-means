@@ -106,6 +106,7 @@ df['Dim1'] = X_reduced[:, 0]
 df['Dim2'] = X_reduced[:, 1]
 
 
+st.markdown('One of my friends thinks Jamal Murray is way better than I do. Here, we use both PCA and t-SNE on some statistical metrics from both regular season and playoff performance in the 2023-24 NBA season to see which NBA players are most statistically similar.')
 
 # Player selection
 selected_player = st.selectbox(
