@@ -105,7 +105,7 @@ else:
 df['Dim1'] = X_reduced[:, 0]
 df['Dim2'] = X_reduced[:, 1]
 
-
+st.title("NBA Player Clustering")
 st.header("What is this?")
 st.write("An interactive plot where you can see who your favorite player's closest peers are across a bunch of different stats in both the regular season and the playoffs.")
 
