@@ -109,7 +109,7 @@ st.title("NBA Player Clustering")
 url = "https://marklisi1.github.io/"
 st.markdown("by [Mark Lisi](%s)." % url)
 st.header("What is this?")
-st.write("An interactive plot where you can see who your favorite player's closest peers are across a bunch of different stats in both the regular season and the playoffs.")
+st.write("An interactive plot where you can see who your favorite player's closest peers are across a bunch of different stats in both the 2023-24 regular season and playoffs.")
 
 st.header("How does it work?")
 st.write("We use machine learning to compare every player's performance across 25 different statistical measures - the usuals like points, rebounds, and assists, as well as some more advanced ones like usage and eFG%.")
