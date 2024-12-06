@@ -106,6 +106,8 @@ df['Dim1'] = X_reduced[:, 0]
 df['Dim2'] = X_reduced[:, 1]
 
 st.title("NBA Player Clustering")
+url = "https://marklisi1.github.io/"
+st.markdown("by [Mark Lisi](%s)." % url)
 st.header("What is this?")
 st.write("An interactive plot where you can see who your favorite player's closest peers are across a bunch of different stats in both the regular season and the playoffs.")
 
@@ -115,7 +117,7 @@ st.write("Our ML algorithms distill all 25 of these stats into two dimensions, p
 
 st.header("What do these plots mean?")
 st.write("They reflect how similar players are to each other based on their overall statistical profile. Players who are clustered together tend to have similar playing styles and roles on their teams. The different colors represent distinct player archetypes we've identified - like scoring guards, defensive specialists, or versatile forwards. The closer two players are on the plot, the more similar their statistical profiles are.")
-st.write("In the PCA regular-season plot, you can see dynamic scoring guards who are weak on defense like Trae Young, Steph Curry, and Luka Doncic clustered towards the bottom right. At the very top you can see defense stalwarts like Rudy Gobert, Giannis, and AD.")
+st.write("In the PCA regular-season plot, you can see dynamic scoring guards who are weak on defense like Trae Young, Steph Curry, and Luka Doncic clustered towards the bottom right. At the very top you can see defensive stalwarts like Rudy Gobert, Giannis, and AD. What other trends and clusters can you see?")
 
 # Player selection
 selected_player = st.selectbox(
